@@ -1,0 +1,36 @@
+{
+  "name": "or_spotify",
+  "version": "1.0.0",
+  "description": "Spotify app version of OR",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "connect-multiparty": "^2.1.0",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.20.1",
+    "mongoose": "^4.13.8",
+    "mongoose-pagination": "^1.0.0",
+    "node-gyp": "^3.6.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.3"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/or73/or_audio_producer_MEAN.git"
+  },
+  "author": "OR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/or73/or_audio_producer_MEAN/issues"
+  },
+  "homepage": "https://github.com/or73/or_audio_producer_MEAN#readme"
+}
