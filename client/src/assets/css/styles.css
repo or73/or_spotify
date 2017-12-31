@@ -1,0 +1,11 @@
+body {
+  background: #eee;
+}
+
+
+.class_error_message {
+  color: darkred;
+  font-size: small;
+  font-weight: bold;
+  font-style: italic;
+}
