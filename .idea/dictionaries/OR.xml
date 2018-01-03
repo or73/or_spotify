@@ -2,6 +2,9 @@
   <dictionary name="OR">
     <words>
       <w>decodification</w>
+      <w>glyphicon</w>
+      <w>navbar</w>
+      <w>unstyled</w>
     </words>
   </dictionary>
 </component>

@@ -135,6 +135,13 @@ function updateUser(req, res) {
 	var userId  = req.params.id;    // obtain user 'id' from url
 	var update  = req.body; // all user data
 
+	// validate user information
+	if (userId != req.user.sub) {
+		return res
+				.status(500)
+				.send({ message: 'You are not authorized to modify this user information' });
+	}
+
 	User
 		.findByIdAndUpdate(userId,
 						update,
