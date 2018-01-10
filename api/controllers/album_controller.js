@@ -12,40 +12,45 @@ var Song    = require('../models/song_model');
 
 
 function getAlbum(req, res) {
-	/*res
-		.status(200)
-		.send({ message: 'getAlbum Action' });*/
-	var albumId = req.params.id;
+	console.log('album_controller > getAlbum + albumId: ', req.params.id);
+
+	let albumId = req.params.id;
+	let find;
 
 	if (!albumId) {
-		var find    = Album.find({});
+		find    = Album.find({});
 	} else {
-		var find    = Album.findById({ albumId });
+		find    = Album.findOne({ _id: albumId });
 	}
 
+	console.log('album_controller: album found --> ', find);
 
-	find.populate({ path: 'artist' }).exec((err, album) => {
-		if (err) {
-			res
-				.status(500)
-				.send({ message: 'Error[500 Internal Server Error]: Request error' });
-		} else {
-			if (!album) {
-				res
-					.status(404)
-					.send({ message: 'Error[404 Not Found]: The requested Album could not be find in DB' });
-			} else {
-				res
-					.status(200)
-					.send({ album });
-			}
-		}
-	});   // loading and storing artist data into Album
+
+	find
+		.populate({ path: 'Artist' })
+		.exec((err, album) => {
+								if (err) {
+									res
+										.status(500)
+										.send({ message: 'Error[500 Internal Server Error]: Request error\n'+'albumId: '+albumId+'\nalbum: '+album });
+								} else {
+									if (!album) {
+										res
+											.status(404)
+											.send({ message: 'Error[404 Not Found]: The requested Album could not be find in DB' });
+									} else {
+										res
+											.status(200)
+											.send({ album });
+									}
+								}
+							});   // loading and storing artist data into Album
 }
 
 
 
 function saveAlbum(req, res) {
+	console.log('album_controller > saveAlbum');
 	var album   = new Album();
 
 	var params  = req.body;
@@ -78,6 +83,7 @@ function saveAlbum(req, res) {
 
 
 function getAlbumsList(req, res) {
+	console.log('album_controller > getAlbumList');
 	var artistId    = req.params.artist;
 	console.log('artistId: ', artistId);
 
@@ -111,6 +117,7 @@ function getAlbumsList(req, res) {
 
 
 function updateAlbum(req, res) {
+	console.log('album_controller > updateAlbum');
 	var albumId = req.params.id;
 	var update  = req.body;
 
@@ -138,6 +145,7 @@ function updateAlbum(req, res) {
 
 
 function deleteAlbum(req, res) {
+	console.log('album_controller > deleteAlbum');
 	var albumId = req.params.id;
 
 	Album
@@ -184,6 +192,7 @@ function deleteAlbum(req, res) {
 
 
 function uploadImage(req, res) {
+	console.log('album_controller > uploadImage');
 	var albumId    = req.params.id;
 	var file_name   = 'Not file attached...';
 
@@ -235,6 +244,7 @@ function uploadImage(req, res) {
  * extract a file from the Server
  */
 function getImageFile (req, res) {
+	console.log('album_controller > geImageFile');
 	var imageFile   = req.params.imageFile;
 	var file_path   = './uploads/albums/' + imageFile;
 

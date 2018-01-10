@@ -1,0 +1,110 @@
+<section class="artist_box_class container_list_class"
+     *ngIf="artist">
+  <section id="id_artist_head_card">
+    <div *ngIf="artist.image && artist.image != 'null'"
+         class="artist_detail_image_class">
+      <figure>
+        <img src="{{ url + 'get-image-artist/' + artist.image }}" alt="{{ artist.name }}" />
+      </figure>
+    </div>  <!-- / .artist_detail_image_class -->
+
+    <div *ngIf="!artist.image || artist.image === 'null'"
+         class="artist_detail_image_class">
+      <figure>
+        <img src="{{ url + 'get-image-artist/default.jpg' }}" alt="artist without image" />
+      </figure>
+    </div>  <!-- / .artist_detail_image_class -->
+
+    <div class="artist_detail_name_class align-content-center">
+      <h2>{{ artist.name }}</h2>
+      <p class="description"> {{ artist.description }} </p>
+      <a  *ngIf="identity.role === 'ROLE_ADMIN'"
+         [routerLink]="['/create-album', artist._id]"
+         class="btn btn-outline-primary">
+        Add Album
+      </a>
+    </div>  <!-- / .artist_detail_name_class -->
+
+    <div *ngIf="!artist.image || artist.image === 'null'"
+         class="artist_image_class">
+      <img src="{{ url + 'get-image-artist/default.jpg' }}" />
+    </div>  <!-- / .artist_image_class -->
+
+    <!--<div class="artist_name_class align-content-center">
+      <a [routerLink]="['/artist', artist._id]"
+         class="artist_name_anchor_class">
+        {{ artist.name }} xxx xxx
+      </a>
+    </div>  <!-- / .artist_name_class -->
+  </section>  <!-- / #id_artist_head_card -->
+
+
+
+  <section id="id_gallery_albums"
+       *ngIf="albums">
+    <!-- LIST All ALBUMS -->
+    <ul class="albums_list_class">
+      <li *ngFor="let album of albums"
+          class="col-lg-4 album_item_list_class text-center">
+        <div class="album_image_name_class">
+          <div class="album_image_class"
+               *ngIf="album.image && album.image != 'null'">
+            <figure>
+              <img src="{{ url + 'get-image-album/' + album.image }}" class="img-fluid img-thumbnail" alt="{{ album.name }}" />
+            </figure>
+          </div>  <!-- / .album_picture_class -->
+
+          <div class="album_image_class"
+               *ngIf="!album.image || album.image === 'null'">
+            <figure>
+              <img src="{{ url + 'get-image-album/default.jpg' }}" class="img-fluid img-thumbnail" alt="album without image" />
+            </figure>
+          </div>  <!-- / .album_picture_class -->
+
+          <div class="album_name_class">
+            <p>
+              <a name="{{ album.title }}"
+                 [routerLink]="['/album', album._id]">
+                {{ album.title }}
+              </a>
+            </p>
+            <p>
+              <a [routerLink]="['/artist', album.artist._id]"
+                 class="album_name_anchor_class">
+                {{ album.artist.name }}
+              </a>
+            </p>
+          </div>  <!-- / .album_title_class -->
+        </div>  <!-- / .album_image_name_class -->
+
+        <div class="buttons"
+             *ngIf="identity.role === 'ROLE_ADMIN'">
+          <a [routerLink]="['/edit-album', album._id]"
+             class="btn btn-sm btn-outline-warning">
+            Edit
+          </a>
+
+          <a (click)="onDeleteConfirm(album._id)"
+             class="btn btn-sm btn-outline-danger">
+            Delete
+          </a>
+        </div>  <!-- / .buttons -->
+
+
+
+        <div id="id_confirmation_album"
+             class="confirmation_album_class"
+             *ngIf="confirmation === album._id">
+          <a (click)="onDeleteAlbum(album._id)"
+             class="btn btn-sm btn-danger">
+            Confirm
+          </a>
+          <a (click)="onCancelAlbum()"
+             class="btn btn-sm btn-warning">
+            Cancel
+          </a>
+        </div>  <!-- / .confirmation_class -->
+      </li>
+    </ul>
+  </section>  <!-- / #id_gallery_albums -->
+</section>  <!-- / .artist_box_class -->

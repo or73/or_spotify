@@ -17,7 +17,35 @@ function clearForm(form) {
     else if (tag === 'select')
       this.selectedIndex = -1;
   });
-};
+}
+
+
+
+function fixAspect(img) {
+  var $img  = $(img),
+      width = $img.width(),
+      height  = $img.height(),
+      tallAndNarrow = width / height < 1;
+
+  if (tallAndNarrow) {
+    $img.addClass('tallAndNarrow');
+  }
+  $img.addClass('loaded');
+}
+
+
+
+function sidebarAction() {
+  $('#sidebar').mouseenter(function () {
+    $('#sidebar').toggleClass('active');
+  });
+
+  $('#sidebar').mouseleave(function () {
+    $('#sidebar').toggleClass('active');
+  });
+}
+
+
 
 $(document)
   .ready(function () {
@@ -27,13 +55,11 @@ $(document)
     /*$('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active');
     });*/
-    $('#sidebar').mouseenter(function () {
-      $('#sidebar').toggleClass('active');
-    });
 
-    $('#sidebar').mouseleave(function () {
-      $('#sidebar').toggleClass('active');
-    });
+    //sidebarAction();
+    //fixAspect($('#id_user_avatar'));
+
+    $('.injected-svg').svgInject();
   });
 
 

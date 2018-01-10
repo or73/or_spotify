@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GLOBAL } from "./Services/global";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 import { UserService} from "./Services/user.service"; // Importing UserService
 import { User } from './models/user';
 
@@ -14,7 +15,7 @@ import { User } from './models/user';
 
 
 export class AppComponent implements OnInit{
-  public title = 'OR-Spotify';
+  public title = 'OR-Musify';
   public user: User;
   public user_register: User;
   public identity;  // object user to be validated, local_storage   true: login   false: not login
@@ -24,7 +25,11 @@ export class AppComponent implements OnInit{
   public url:string;
 
   // Loading userService, contains all methods of our services
-  constructor (private _userService:UserService) {
+  constructor (
+                private _route: ActivatedRoute,
+                private _router: Router,
+                private _userService:UserService
+              ) {
     this.user           = new User('', '', '', '', '', 'ROLE_USER', '');
     this.user_register  = new User('', '', '', '', '', 'ROLE_USER', '');
     this.url            = GLOBAL.url;
@@ -37,7 +42,7 @@ export class AppComponent implements OnInit{
    var test = this._userService.signup();
 
    console.log(test);*/
-   /* Initializing/Otaining from localStorage both: identity and token keys */
+   /* Initializing/Obtaining from localStorage both: identity and token keys */
    this.identity  = this._userService.getIdentity();
    this.token     = this._userService.getToken();
 
@@ -141,5 +146,7 @@ export class AppComponent implements OnInit{
 
     this.identity = null;
     this.token    = null;
+
+    this._router.navigate(['/']);
   }
 }

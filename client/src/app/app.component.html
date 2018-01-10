@@ -1,235 +1,276 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
-<div *ngIf="identity"
-     class="container-fluid wrapper">
-  <nav id="sidebar" class="active">
-    <!-- Sidebar header -->
-    <div class="sidebar-header">
-      <span class="head_title_class">
-        <a [routerLink]="['/']">
-          <i class="glyphicon glyphicon-music"></i>
-          <h3>{{ title }}</h3>
-          <strong>OR-App</strong>
-        </a>
-      </span>
-    </div>  <!-- / .sidebar-header -->
-
-    <!-- Sidebar links -->
-    <ul class="list-unstyled components">
-      <li>
-        <a href="#">
-          <i class="glyphicon glyphicon-search" aria-expanded="false"></i>
-          <p>Search</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="glyphicon glyphicon-star"></i>
-          <p>Artists</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="glyphicon glyphicon-book"></i>
-          <p>Albums</p>
-        </a>
-      </li>
-    </ul>
-
-    <ul class="list-unstyled components">
-      <li>
-        <div class="user_image_class block_style text-center">
-          <img id="id_user_avatar"
-               class="user_avatar_class rounded-circle img-fluid mx-auto d-block"
-               src="{{ url + 'get-image-user/' + identity.image }}"
-               alt="User Avatar"/>
-        </div>
-        <span id="id_user_logged_span block_style">
-          <strong>{{ identity.surname }}</strong>, {{ identity.name }}
-        </span>
-      </li>
-
-      <li>
-        <a [routerLink]="'/my-data'">
-          <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
-            <p>My Data</p>
-        </a>
-      </li>
-
-      <li>
-        <a (click)="logOut()" class="btn_logout_class">
-          <i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
-          <p>Sign Out</p>
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <div id="content">
-    <router-outlet></router-outlet>
-  </div>  <!-- / #content -->
-
-
-</div>  <!-- / ngIf=identity .wrapper -->
-
-
-
-<div *ngIf="!identity">
-  <div class="row align-content-center">
-    <div class="col col-md-6">
-      <!-- Identification Requirement -->
-      <h2>Identification Required</h2>
-
-      <div *ngIf="errorMessage">
-        <div class="alert alert-info">
-          <strong>Error:</strong> Username or Password is not valid<br/>
-          <strong>{{ errorMessage }}</strong>
-        </div>  <!-- / .alert -->
-      </div>  <!-- / ngIf=errorMessage -->
-
-      <!-- Login Form -->
-      <!-- #loginFrom="ngForm"  transforming login form into angular form, with name 'loginForm'
-           (ngSubmit): event directive and a method 'onSubmit()' is executed
-      -->
-      <!-- Message Alert if user cannot be logged in -->
-
-      <form id="id_login_form"
-            #loginForm="ngForm"
-            (ngSubmit)="onSubmitLoginForm()"
-            class="col-md-10">
-        <div class="form-group">
-          <label for="id_login_user_email">e-mail:</label>
-          <!-- #login_user_email -->
-          <!-- #login_user_email: id in Angular,
-              name: required for identification into the form, for binding purposes
-              [( ngModel )]: binding directive, and a property is assigned to be associated with input information
-                              object: user
-                              property: email
-          -->
-          <input id="id_login_user_email"
-                 #login_user_email="ngModel"
-                 name="name_login_user_email"
-                 [(ngModel)]="user.email"
-                 type="email"
-                 class="form-control"
-                 required/>
-          <!-- Error Message if email field has not been filled -->
-          <span *ngIf="!login_user_email.valid && login_user_email.touched"
-                class="class_error_message">
-            e-mail is required
+<main class="h-100 w-100">
+  <section class="row h-100 hidden-xs-down">
+    <aside id="id_aside_navbar_class"
+           *ngIf="identity"
+           class="container-fluid wrapper col-md-1 aside_menu_class h-100">
+      <nav id="id_sidebar" class="active">
+        <!-- Sidebar header -->
+        <div class="sidebar-header">
+          <span class="head_title_class">
+            <a [routerLink]="['/']">
+              <!--<i class="glyphicon glyphicon-music"></i>-->
+              <!--<span class="iconic iconic-md iconic-musical-note" title="music" aria-hidden="true"></span>-->
+              <img src="../assets/img/svg/smart/headphones.svg"
+                   class="iconic iconic-md" />
+              <h3 class="small_title_class">{{ title }}</h3>
+              <strong class="small_title_class">OR-App</strong>
+            </a>
           </span>
-        </div>  <!-- / .form-group -->
-        <div class="form-group">
-          <label for="id_login_user_password">Password</label>
-          <!-- #login_user_password: id in Angular,
-              name: required for identification into the form, for binding purposes
-              [( ngModel )]: binding directive, and a property is assigned to be associated with input information
-                              object: user
-                              property: password
-          -->
-          <input id="id_login_user_password"
-                 #login_user_password="ngModel"
-                 name="name_login_user_password"
-                 [(ngModel)]="user.password"
-                 type="password"
-                 class="form-control"
-                 required/>
-          <!-- Error message if password field has not been filled  -->
-          <span *ngIf="!login_user_password.valid && login_user_password.touched"
-                class="class_error_message">
-            Password is required
-          </span>
-        </div>  <!-- / .form-group -->
+        </div>  <!-- / .sidebar-header -->
 
-        <input id="id_button_login" type="submit" value="Login" class="btn btn-primary"/>
-      </form>
-    </div>  <!-- / .col -->
 
-    <div class="col col-md-6">
-      <!-- Registration requirement -->
-      <h2>A Registration is needed</h2>
-      <div *ngIf="alertRegistrationMessage">
-        <div class="alert alert-info">
-          <strong>Alert! {{ alertRegistrationMessage }}</strong>
-        </div>  <!-- / .alert -->
-      </div>  <!-- / errorMessage -->
 
-      <!-- Registration Form -->
-      <!-- #registrationFrom="ngForm"  transforming login form into angular form, with name 'registrationForm' -->
-      <form id="id_registration_form"
-            #registrationForm="ngForm"
-            (ngSubmit)="onSubmitRegistrationForm()"
-            class="col-md-12">
-        <div class="form-group">
-          <label for="id_registration_user_name">Name:</label>
-          <input id="id_registration_user_name"
-                 #registration_user_name="ngModel"
-                 name="name_registration_user_name"
-                 [(ngModel)]="user_register.name"
-                 type="text"
-                 class="form-control"
-                 required/>
-          <!-- Error message if User Name field has not been filled  -->
-          <span *ngIf="!registration_user_name.valid && registration_user_name.touched"
-                class="class_error_message">
-            User Name is required
-          </span>
-        </div>  <!-- / .form-group -->
-        <div class="form-group">
-          <label for="id_registration_user_surname">Surname:</label>
-          <input id="id_registration_user_surname"
-                 #registration_user_surname="ngModel"
-                 name="name_resgitration_user_surname"
-                 [(ngModel)]="user_register.surname"
-                 type="text"
-                 class="form-control"
-                 required/>
-          <!-- Error message if User Surname field has not been filled  -->
-          <span *ngIf="!registration_user_surname.valid && registration_user_surname.touched"
-                class="class_error_message">
-             User Surname is required
-          </span>
-        </div>  <!-- / .form-group -->
-        <div class="form-group">
-          <label for="id_registration_user_email">e-mail:</label>
-          <input id="id_registration_user_email"
-                 #registration_user_email="ngModel"
-                 name="name_registration_user_email"
-                 [(ngModel)]="user_register.email"
-                 type="email"
-                 class="form-control"
-                 required/>
-          <!-- Error message if User email field has not been filled  -->
-          <span *ngIf="!registration_user_email.valid && registration_user_email.touched"
-                class="class_error_message">
-            User email is required
-          </span>
-        </div>  <!-- / .form-group -->
-        <div class="form-group">
-          <label for="id_registration_user_password">Password:</label>
-          <input id="id_registration_user_password"
-                 #registration_user_password="ngModel"
-                 name="name_registration_user_password"
-                 [(ngModel)]="user_register.password"
-                 type="password"
-                 class="form-control"
-                 required/>
-          <!-- Error message if User Password field has not been filled  -->
-          <span *ngIf="!registration_user_password.valid && registration_user_password.touched"
-                class="class_error_message">
-            User password is required
-          </span>
-        </div>
-        <input id="id_button_registration"
-               type="submit"
-               value="Registration"
-               class="btn btn-primary"/>
-      </form>
-    </div>  <!-- / .col -->
-  </div>  <!-- / .row -->
-</div>  <!-- / ngIf!=identity -->
+        <!-- Sidebar links -->
+        <ul class="list-unstyled components">
+          <li class="menu_item_class">
+            <a href="#"
+               [routerLinkActive]="['active_link_class']">
+              <!--<i class="glyphicon glyphicon-search" aria-expanded="false"></i>-->
+              <!--<span class="iconic iconic-md iconic-magnifying-glass" title="search" aria-hidden="true"></span>-->
+              <img src="../assets/img/svg/smart/magnifying-glass.svg"
+                   class="iconic iconic-md" />
+              <p>Search</p>
+            </a>
+          </li>
+
+          <li class="menu_item_class">
+            <a [routerLink]="['/artists', 1]"
+               [routerLinkActive]="['active_link_class']">
+              <!--<i class="glyphicon glyphicon-star"></i>-->
+              <!--<span class="iconic iconic-md iconic-star" title="star" aria-hidden="true"></span>-->
+              <img src="../assets/img/svg/smart/microphone.svg"
+                   class="iconic iconic-md" />
+              <p>Artists</p>
+            </a>
+          </li>
+
+          <li class="menu_item_class">
+            <a href="#"
+               [routerLinkActive]="['active_link_class']">
+              <!--<i class="glyphicon glyphicon-book"></i>-->
+              <!--<span class="iconic iconic-md iconic-book iconic-book-bottom iconic-book-spine iconic-book-cover" title="book" aria-hidden="true"></span>-->
+              <img src="../assets/img/svg/smart/book.svg"
+                   class="iconic iconic-md" />
+              <p>Albums</p>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="list-unstyled components">
+          <li class="menu_item_class">
+            <div class="user_image_class circle">
+              <!--rounded-circle img-fluid mx-auto d-block"-->
+              <img id="id_user_avatar"
+                   class="user_avatar_class"
+                   src="{{ url + 'get-image-user/' + identity.image }}"
+                   onload="fixAspect(this)"
+                   alt="User Avatar"/>
+            </div>
+            <span id="id_user_logged_span">
+              <strong>{{ identity.surname }}</strong>, {{ identity.name }}
+            </span>
+          </li>
+
+          <li class="menu_item_class">
+            <a [routerLink]="'/my-data'"
+               [routerLinkActive]="['active_link_class']">
+              <!--<i class="glyphicon glyphicon-cog" aria-hidden="true"></i>-->
+              <!--<span class="iconic iconic-md iconic-cog" title="cog" aria-hidden="true"></span>-->
+              <img src="../assets/img/svg/smart/cogs.svg"
+                   class="iconic iconic-md" />
+                <p>My Data</p>
+            </a>
+          </li>
+
+          <li class="menu_item_class">
+            <a (click)="logOut()"
+               class="btn_logout_class">
+              <!--<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>-->
+              <!--<span class="iconic iconic-md iconic-envelope-open" title="account logout" aria-hidden="true"></span>--
+              <!--<img data-state="open" data-src="../assets/img/svg/smart/envelope.svg" class="svg-inject iconic-colors" alt="envelope" />-->
+              <img src="../assets/img/svg/smart/account.svg"
+                   class="iconic iconic-md"
+                   data-state="logout"/>
+              <p>Sign Out</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>  <!-- / ngIf=identity .wrapper -->
+
+    <div id="id_content"
+         class="col-md-11"
+         [class.hidden]="!identity">
+      <router-outlet class="router_class"></router-outlet>
+      
+      <player class="player_class"
+              *ngIf="identity">
+      </player>
+    </div>  <!-- / #content -->
+  </section>
+
+
+
+  <section *ngIf="!identity"
+         class="container-fluid">
+      <section class="row align-content-center">
+          <section class="col col-md-6">
+            <!-- Identification Requirement -->
+            <header>
+              <h2>Identification Required</h2>
+
+              <div *ngIf="errorMessage">
+                <div class="alert alert-info">
+                  <strong>Error:</strong> Username or Password is not valid<br/>
+                  <strong>{{ errorMessage }}</strong>
+                </div>  <!-- / .alert -->
+              </div>  <!-- / ngIf=errorMessage -->
+            </header>
+
+            <!-- Login Form -->
+            <!-- #loginFrom="ngForm"  transforming login form into angular form, with name 'loginForm'
+                 (ngSubmit): event directive and a method 'onSubmit()' is executed
+            -->
+            <!-- Message Alert if user cannot be logged in -->
+
+            <form id="id_login_form"
+                  #loginForm="ngForm"
+                  (ngSubmit)="onSubmitLoginForm()"
+                  class="col-md-10">
+              <div class="form-group">
+                <label for="id_login_user_email">e-mail:</label>
+                <!-- #login_user_email -->
+                <!-- #login_user_email: id in Angular,
+                    name: required for identification into the form, for binding purposes
+                    [( ngModel )]: binding directive, and a property is assigned to be associated with input information
+                                    object: user
+                                    property: email
+                -->
+                <input id="id_login_user_email"
+                       #login_user_email="ngModel"
+                       name="name_login_user_email"
+                       [(ngModel)]="user.email"
+                       type="email"
+                       class="form-control"
+                       required/>
+                <!-- Error Message if email field has not been filled -->
+                <span *ngIf="!login_user_email.valid && login_user_email.touched"
+                      class="class_error_message">
+                  e-mail is required
+                </span>
+              </div>  <!-- / .form-group -->
+              <div class="form-group">
+                <label for="id_login_user_password">Password</label>
+                <!-- #login_user_password: id in Angular,
+                    name: required for identification into the form, for binding purposes
+                    [( ngModel )]: binding directive, and a property is assigned to be associated with input information
+                                    object: user
+                                    property: password
+                -->
+                <input id="id_login_user_password"
+                       #login_user_password="ngModel"
+                       name="name_login_user_password"
+                       [(ngModel)]="user.password"
+                       type="password"
+                       class="form-control"
+                       required/>
+                <!-- Error message if password field has not been filled  -->
+                <span *ngIf="!login_user_password.valid && login_user_password.touched"
+                      class="class_error_message">
+                  Password is required
+                </span>
+              </div>  <!-- / .form-group -->
+
+              <input id="id_button_login" type="submit" value="Login" class="btn btn-primary" />
+            </form>
+          </section>  <!-- / .col -->
+
+          <section class="col col-md-6">
+            <header>
+              <!-- Registration requirement -->
+              <h2>A Registration is needed</h2>
+              <div *ngIf="alertRegistrationMessage">
+              <div class="alert alert-info">
+                <strong>Alert! {{ alertRegistrationMessage }}</strong>
+              </div>  <!-- / .alert -->
+            </div>  <!-- / errorMessage -->
+            </header>
+
+            <!-- Registration Form -->
+            <!-- #registrationFrom="ngForm"  transforming login form into angular form, with name 'registrationForm' -->
+            <form id="id_registration_form"
+                  #registrationForm="ngForm"
+                  (ngSubmit)="onSubmitRegistrationForm()"
+                  class="col-md-12">
+              <div class="form-group">
+                <label for="id_registration_user_name">Name:</label>
+                <input id="id_registration_user_name"
+                       #registration_user_name="ngModel"
+                       name="name_registration_user_name"
+                       [(ngModel)]="user_register.name"
+                       type="text"
+                       class="form-control"
+                       required/>
+                <!-- Error message if User Name field has not been filled  -->
+                <span *ngIf="!registration_user_name.valid && registration_user_name.touched"
+                      class="class_error_message">
+                  User Name is required
+                </span>
+              </div>  <!-- / .form-group -->
+              <div class="form-group">
+                <label for="id_registration_user_surname">Surname:</label>
+                <input id="id_registration_user_surname"
+                       #registration_user_surname="ngModel"
+                       name="name_resgitration_user_surname"
+                       [(ngModel)]="user_register.surname"
+                       type="text"
+                       class="form-control"
+                       required/>
+                <!-- Error message if User Surname field has not been filled  -->
+                <span *ngIf="!registration_user_surname.valid && registration_user_surname.touched"
+                      class="class_error_message">
+                   User Surname is required
+                </span>
+              </div>  <!-- / .form-group -->
+              <div class="form-group">
+                <label for="id_registration_user_email">e-mail:</label>
+                <input id="id_registration_user_email"
+                       #registration_user_email="ngModel"
+                       name="name_registration_user_email"
+                       [(ngModel)]="user_register.email"
+                       type="email"
+                       class="form-control"
+                       required/>
+                <!-- Error message if User email field has not been filled  -->
+                <span *ngIf="!registration_user_email.valid && registration_user_email.touched"
+                      class="class_error_message">
+                  User email is required
+                </span>
+              </div>  <!-- / .form-group -->
+              <div class="form-group">
+                <label for="id_registration_user_password">Password:</label>
+                <input id="id_registration_user_password"
+                       #registration_user_password="ngModel"
+                       name="name_registration_user_password"
+                       [(ngModel)]="user_register.password"
+                       type="password"
+                       class="form-control"
+                       required/>
+                <!-- Error message if User Password field has not been filled  -->
+                <span *ngIf="!registration_user_password.valid && registration_user_password.touched"
+                      class="class_error_message">
+                  User password is required
+                </span>
+              </div>
+              <input id="id_button_registration"
+                     type="submit"
+                     value="Registration"
+                     class="btn btn-primary"/>
+            </form>
+          </section>  <!-- / .col -->
+      </section>  <!-- / .row -->
+  </section>  <!-- / ngIf!=identity -->
+</main>
 
 
 

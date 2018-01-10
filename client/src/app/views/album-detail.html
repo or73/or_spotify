@@ -1,0 +1,84 @@
+<section class="album_box"
+         *ngIf="album">
+  <section id="id_album_head_card">
+    <div class="album_detail_image_class"
+         *ngIf="album.image && album.image != 'null'">
+      <figure>
+        <img src="{{ url + 'get-image-album/' + album.image }}"
+             alt="{{ album.name }}" />
+      </figure>
+    </div>  <!-- / .album_head_card_class -->
+
+    <div class="album_detail_image_class"
+         *ngIf="!album.image || album.image === 'null'">
+      <figure>
+        <img src="{{ url + 'get-image-album/default.jpg' }}"
+             alt="album without image" />
+      </figure>
+    </div>  <!-- / .album_head_card_class -->
+
+    <div class="album_data_class">
+      <h1>{{ album.title }}</h1>
+      <!--<p>{{ album.artist.name }}</p>-->
+      <p>{{ album.year }}</p>
+      <p>{{ album.description }}</p>
+
+      <a class="btn btn-outline-primary"
+         *ngIf="identity.role === 'ROLE_ADMIN'"
+         [routerLink]="['/create-song', album._id]" >
+        Add Song
+      </a>
+    </div>  <!-- / .album_data_class -->
+  </section>  <!-- / #id_album_head_card -->
+  
+  <section class="clearfix"></section>
+  
+  <section id="id_gallery_songs" class="container_list_class"
+           *ngIf="songs">
+    <ul class="song_list_class">
+      <li *ngFor="let song of songs"
+          class="col-lg-4 song_item_list_class text-center">
+        <div class="song_image_name_class">
+          <div class="song_name_class">
+            <a name="{{ song.title }}"
+               role="button"
+               (click)="startPlayer(song)"
+               class="btn btn-sm btn-success iconic iconic-media-play"
+               aria-hidden="true"
+               [routerLink]="['/edit-song', song._id]">
+            </a>
+            {{ song.number + '. ' + song.name + ' - ' + song.description }}
+          </div>  <!-- / .album_title_class -->
+        </div>  <!-- / .album_image_name_class -->
+      
+        <div class="buttons"
+             *ngIf="identity.role === 'ROLE_ADMIN'">
+          <a [routerLink]="['/edit-song', song._id]"
+             class="btn btn-sm btn-outline-warning">
+            Edit
+          </a>
+        
+          <a (click)="onDeleteConfirm(song._id)"
+             class="btn btn-sm btn-outline-danger">
+            Delete
+          </a>
+        </div>  <!-- / .buttons -->
+      
+      
+      
+        <div id="id_confirmation_song"
+             class="confirmation_song_class"
+             *ngIf="confirmation === song._id">
+          <a (click)="onDeleteSong(song._id)"
+             class="btn btn-sm btn-danger">
+            Confirm
+          </a>
+          <a (click)="onCancelSong()"
+             class="btn btn-sm btn-warning">
+            Cancel
+          </a>
+        </div>  <!-- / .confirmation_class -->
+      </li>
+    </ul>
+  </section>  <!-- / #id_gallery_songs -->
+</section>

@@ -1,0 +1,104 @@
+<section class="container-fluid w-75"
+         *ngIf="identity && identity.role === 'ROLE_ADMIN'">
+  <header>
+    <h1>{{ title }}</h1>
+    <h2 id="id_album_title"></h2>
+
+
+    <div *ngIf="alertMessage">
+      <div class="alert alert-info">
+        {{ alertMessage }}
+      </div>  <!-- / .alert -->
+    </div>  <!-- / *ngIf -->
+  </header>
+
+
+
+  <form #formSong="ngForm"
+        (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="id_song_number">
+        Number:
+      </label>
+      <input id="id_song_number"
+             class="form-control"
+             #number="ngModel"
+             name="name_number_name"
+             type="number"
+             [(ngModel)]="song.number"
+             required />
+      <span *ngIf="!number.valid && number.touched">
+        Number is required
+      </span>
+    </div>  <!-- / .form-group -->
+
+    <div class="form-group">
+      <label for="id_song_name">
+        Name:
+      </label>
+      <input id="id_song_name"
+             class="form-control"
+             #name="ngModel"
+             name="name_song_name"
+             type="text"
+             [(ngModel)]="song.name"
+             required />
+      <span *ngIf="!name.valid && name.touched">
+        Name is required
+      </span>
+    </div>  <!-- / .form-group -->
+
+    <div class="form-group">
+      <label for="id_song_duration">
+        Duration:
+      </label>
+      <input id="id_song_duration"
+                class="form-control"
+                #duration="ngModel"
+                name="name_song_duration"
+                [(ngModel)]="song.duration"
+                required />
+      <span *ngIf="!duration.valid && duration.touched">
+        Duration is required
+      </span>
+    </div>  <!-- / .form-group -->
+
+    <div *ngIf="is_edit">
+      <div class="song_file_for_edit_class"
+           *ngIf="song.file && song.file != 'null'">
+        <p>Audio File:</p>
+        <audio controls>
+          <source src="{{ url + 'get-file-song/' + song.file}}"
+                  type="audio/mpeg" />
+          Your browser does not support the audio tag
+        </audio>
+      </div>  <!-- / *ngIf -->
+
+      <div class="form-group">
+        <label for="id_song_file">
+          Load Image:
+        </label>
+        <input id="id_song_file"
+               class="form-control"
+               name="name_song_file"
+               placeholder="Load Audio File..."
+               type="file"
+               (change)="fileChangeEvent($event)" />
+      </div>  <!-- / .form-group -->
+    </div>  <!-- / *ngIf -->
+
+
+    <input class="btn btn-outline-info"
+           type="submit"
+           value="{{ title }}"
+           [disabled]="!formSong.form.valid" />
+  </form>
+</section>  <!-- / .container-fluid -->
+
+
+
+<div class="container-fluid w-75"
+     *ngIf="!identity || identity.role != 'ROLE_ADMIN'">
+  <h1>Error</h1>
+  <p>You are not and ADMINISTRATOR and you don't have privileges to execute this functionality </p>
+</div>  <!-- / .container-fluid -->

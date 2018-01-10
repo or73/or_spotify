@@ -1,110 +1,116 @@
-<div class="col-md-12">
-  <p class="title_style_class">Update My Data</p>
+<section class="row w-100">
+  <section class="col-md-12 w-75">
+    <header>
+      <p class="title_style_class">Update My Data</p>
+    </header>
 
-  <!-- update requirement -->
-  <span class="head_title_class">
-    <a [routerLink]="['/']">
-      <i class="fa fa-music" aria-hidden=""></i>
-      <strong>{{ title }}</strong>
-    </a>
-  </span>
-
-
-
-  <div *ngIf="alertMessage">
-    <div class="alert alert-info">
-      <strong>Alert! {{ alertMessage }}</strong>
-    </div>  <!-- / .alert -->
-  </div>  <!-- / errorMessage -->
-
-  <!-- update Form -->
-  <!-- #updateFrom="ngForm"  transforming login form into angular form, with name 'updateForm' -->
-  <form id="id_user_update_form"
-        #userUpdateForm="ngForm"
-        (ngSubmit)="onSubmit()"
-        class="w-75">
-    <div class="form-group">
-      <label for="id_user_update_name">Name:</label>
-      <input id="id_user_update_name"
-             #update_user_name="ngModel"
-             name="name_update_user_name"
-             [(ngModel)]="user.name"
-             type="text"
-             class="form-control"
-             required/>
-      <!-- Error message if User Name field has not been filled  -->
-      <span *ngIf="!update_user_name.valid && update_user_name.touched"
-            class="class_error_message">
-          User Name is required
-        </span>
-    </div>  <!-- / .form-group -->
-    <div class="form-group">
-      <label for="id_update_user_surname">Surname:</label>
-      <input id="id_update_user_surname"
-             #update_user_surname="ngModel"
-             name="name_resgitration_user_surname"
-             [(ngModel)]="user.surname"
-             type="text"
-             class="form-control"
-             required/>
-      <!-- Error message if User Surname field has not been filled  -->
-      <span *ngIf="!update_user_surname.valid && update_user_surname.touched"
-            class="class_error_message">
-           User Surname is required
-        </span>
-    </div>  <!-- / .form-group -->
-    <div class="form-group">
-      <label for="id_update_user_email">e-mail:</label>
-      <input id="id_update_user_email"
-             #update_user_email="ngModel"
-             name="name_update_user_email"
-             [(ngModel)]="user.email"
-             type="email"
-             class="form-control"
-             required/>
-      <!-- Error message if User email field has not been filled  -->
-      <span *ngIf="!update_user_email.valid && update_user_email.touched"
-            class="class_error_message">
-          User email is required
-        </span>
-    </div>  <!-- / .form-group -->
+    <section>
+      <!-- update requirement -->
+      <span class="head_title_class">
+        <a [routerLink]="['/']">
+          <i class="fa fa-music" aria-hidden=""></i>
+          <strong>{{ title }}</strong>
+        </a>
+      </span>
 
 
-    <div class="image_for_edit"
-         *ngIf="user.image && user.image != 'null'">
-      <img src="{{ url + 'get-image-user/' + user.image }}"
-           class="user_avatar_class"
-           alt="Uploaded User Avatar" />
-    </div>  <!-- / .image_for_edit -->
+
+      <div *ngIf="alertMessage">
+        <div class="alert alert-info">
+          <strong>Alert! {{ alertMessage }}</strong>
+        </div>  <!-- / .alert -->
+      </div>  <!-- / errorMessage -->
+    </section>
+
+    <!-- update Form -->
+    <!-- #updateFrom="ngForm"  transforming login form into angular form, with name 'updateForm' -->
+    <form id="id_user_update_form"
+          #userUpdateForm="ngForm"
+          (ngSubmit)="onSubmit()"
+          class="w-75">
+      <div class="form-group">
+        <label for="id_user_update_name">Name:</label>
+        <input id="id_user_update_name"
+               #update_user_name="ngModel"
+               name="name_update_user_name"
+               [(ngModel)]="user.name"
+               type="text"
+               class="form-control"
+               required/>
+        <!-- Error message if User Name field has not been filled  -->
+        <span *ngIf="!update_user_name.valid && update_user_name.touched"
+              class="class_error_message">
+            User Name is required
+          </span>
+      </div>  <!-- / .form-group -->
+      <div class="form-group">
+        <label for="id_update_user_surname">Surname:</label>
+        <input id="id_update_user_surname"
+               #update_user_surname="ngModel"
+               name="name_resgitration_user_surname"
+               [(ngModel)]="user.surname"
+               type="text"
+               class="form-control"
+               required/>
+        <!-- Error message if User Surname field has not been filled  -->
+        <span *ngIf="!update_user_surname.valid && update_user_surname.touched"
+              class="class_error_message">
+             User Surname is required
+          </span>
+      </div>  <!-- / .form-group -->
+      <div class="form-group">
+        <label for="id_update_user_email">e-mail:</label>
+        <input id="id_update_user_email"
+               #update_user_email="ngModel"
+               name="name_update_user_email"
+               [(ngModel)]="user.email"
+               type="email"
+               class="form-control"
+               required/>
+        <!-- Error message if User email field has not been filled  -->
+        <span *ngIf="!update_user_email.valid && update_user_email.touched"
+              class="class_error_message">
+            User email is required
+          </span>
+      </div>  <!-- / .form-group -->
 
 
-    <div class="form-group">
-      <label for="id_user_update_image">Upload Image:</label>
-      <input id="id_user_update_image"
-             type="file"
-             placeholder="Upload Image"
-             (change)="fileChangeEvent($event)"
-             class="form-control" />
-    </div>  <!-- / .form-group -->
+      <div class="image_for_edit"
+           *ngIf="user.image && user.image != 'null'">
+        <img src="{{ url + 'get-image-user/' + user.image }}"
+             class="user_avatar_class"
+             alt="Uploaded User Avatar" />
+      </div>  <!-- / .image_for_edit -->
 
-   <!-- <div class="form-group">
-      <label for="id_update_user_password">Password:</label>
-      <input id="id_update_user_password"
-             #update_user_password="ngModel"
-             name="name_update_user_password"
-             [(ngModel)]="user.password"
-             type="password"
-             class="form-control"
-             required/>
-      <!-- Error message if User Password field has not been filled  -->
-      <!--<span *ngIf="!update_user_password.valid && update_user_password.touched"
-            class="class_error_message">
-          User password is required
-        </span>
-    </div> <!-- / .form-group -->
-    <input id="id_button_update"
-           type="submit"
-           value="Update"
-           class="btn btn-primary"/>
-  </form>
-</div>  <!-- / .col -->
+
+      <div class="form-group">
+        <label for="id_user_update_image">Upload Image:</label>
+        <input id="id_user_update_image"
+               type="file"
+               placeholder="Upload Image"
+               (change)="fileChangeEvent($event)"
+               class="form-control" />
+      </div>  <!-- / .form-group -->
+
+     <!-- <div class="form-group">
+        <label for="id_update_user_password">Password:</label>
+        <input id="id_update_user_password"
+               #update_user_password="ngModel"
+               name="name_update_user_password"
+               [(ngModel)]="user.password"
+               type="password"
+               class="form-control"
+               required/>
+        <!-- Error message if User Password field has not been filled  -->
+        <!--<span *ngIf="!update_user_password.valid && update_user_password.touched"
+              class="class_error_message">
+            User password is required
+          </span>
+      </div> <!-- / .form-group -->
+      <input id="id_button_update"
+             type="submit"
+             value="Update"
+             class="btn btn-primary"/>
+    </form>
+  </section>  <!-- / .col -->
+</section>  <!-- / .row -->

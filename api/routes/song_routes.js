@@ -9,7 +9,8 @@ var multipart       = require('connect-multiparty');
 var md_upload       = multipart({ uploadDir: './uploads/songs' });
 
 
-
+console.log('song_routes - md_auth: ', md_auth);
+console.log('song_routes - md_auth.ensureAuth: ', md_auth.ensureAuth);
 // ROUTES
 // GET requirements
 api
@@ -17,10 +18,10 @@ api
 		md_auth.ensureAuth,
 		SongController.getSong)
 	.get('/songs/:albumId?',
-		md_auth.ensureAuth,
+		//md_auth.ensureAuth,
 		SongController.getSongsList)
 	.get('/get-file-song/:songFile',
-		md_auth.ensureAuth,
+		//md_auth.ensureAuth,
 		SongController.getSongFile);
 
 

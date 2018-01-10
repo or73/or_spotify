@@ -1,5 +1,7 @@
 'use strict';
 
+//import { GLOBAL } from "../../client/src/app/Services/global";
+
 var path                = require('path');
 var fs                  = require('fs');
 var mongoosePagination  = require('mongoose-pagination');
@@ -13,8 +15,9 @@ var Song    = require('../models/song_model');
 function getArtist(req, res) {
 	var artistId = req.params.id;
 
-	Artist.findById(artistId,
-		(err, artist) => {
+	//Artist.findById(artistId,
+	Artist.findOne({ _id: artistId},
+					(err, artist) => {
 			if (err) {
 				res
 					.status(500)
@@ -68,13 +71,14 @@ function saveArtist(req, res) {
 
 
 function getArtistsList(req, res) {
+	console.log('[artist_controller > getArtistList');
+	let page            = 1;
+	
 	if (req.params.page) {
-		var page    = req.params.page;
-	} else {
-		var page    = 1;
+		page    = req.params.page;
 	}
 
-	var itemsPerPage    = 3;
+	var itemsPerPage    = 6;
 
 	Artist
 		.find()

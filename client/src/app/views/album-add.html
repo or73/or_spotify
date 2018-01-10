@@ -1,0 +1,107 @@
+<section class="container-fluid w-75"
+         *ngIf="identity && identity.role === 'ROLE_ADMIN'">
+  <header>
+    <h1>{{ title }}</h1>
+
+
+    <div *ngIf="alertMessage">
+      <div class="alert alert-info">
+        {{ alertMessage }}
+      </div>  <!-- / .alert -->
+    </div>  <!-- / *ngIf -->
+  </header>
+
+
+  <div class="container_list_class">
+    <form class="edit_album_form_class"
+          #formAlbum="ngForm"
+          (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="id_album_title">
+          Title:
+        </label>
+        <input id="id_album_title"
+               class="form-control"
+               #title_album="ngModel"
+               name="name_album_title"
+               type="text"
+               [(ngModel)]="album.title"
+               required />
+        <span *ngIf="!title_album.valid && title_album.touched">
+          Title is required
+        </span>
+      </div>  <!-- / .form-group -->
+  
+      <div class="form-group">
+        <label for="id_album_description">
+          Description:
+        </label>
+        <textarea id="id_album_description"
+                  class="form-control"
+                  #description="ngModel"
+                  name="name_album_description"
+                  rows="7"
+                  [(ngModel)]="album.description"
+                  required >
+        </textarea>
+        <span *ngIf="!description.valid && description.touched">
+          Description is required
+        </span>
+      </div>  <!-- / .form-group -->
+  
+      <div class="form-group">
+        <label for="id_album_year">
+          Year:
+        </label>
+        <input id="id_album_year"
+               class="form-control"
+               #year="ngModel"
+               name="name_album_year"
+               type="text"
+               [(ngModel)]="album.year"
+               required />
+        <span *ngIf="!description.valid && description.touched">
+          Year is required
+        </span>
+      </div>  <!-- / .form-group -->
+  
+      <div *ngIf="is_edit">
+        <div class="album_image_for_edit_class"
+             *ngIf="album.image && album.image != 'null'">
+          <figure>
+            <img src="{{ url + 'get-image-album/' + album.image }}" alt="{{ album.name }}" />
+          </figure>
+        </div>  <!-- / *ngIf -->
+  
+        <div class="album_image_for_edit_class"
+             *ngIf="!album.image || album.image === 'null'">
+          <figure>
+            <img src="{{ url + 'get-image-album/default.jpg' }}" alt="album without image" />
+          </figure>
+        </div>  <!-- / *ngIf -->
+  
+        <div class="form-group">
+          <label for="id_album_image">
+            Load Image:
+          </label>
+          <input id="id_album_image"
+                 class="form-control"
+                 name="name_album_image"
+                 placeholder="Load Image..."
+                 type="file"
+                 (change)="fileChangeEvent($event)" />
+          <span *ngIf="!description.valid && description.touched">
+            Description is required
+          </span>
+        </div>  <!-- / .form-group -->
+      </div>  <!-- / *ngIf -->
+  
+  
+      <input class="btn btn-outline-info"
+             type="submit"
+             value="{{ title }}"
+             [disabled]="!formAlbum.form.valid" />
+    </form>
+  </div>  <!-- / .container_list_class -->
+</section>  <!-- / .container-fluid -->
+

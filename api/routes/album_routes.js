@@ -3,7 +3,7 @@
 var express         = require('express');
 var AlbumController = require('../controllers/album_controller');
 
-var api             = express.Router();
+var app             = express.Router();
 var md_auth         = require('../middlewares/authenticated');
 
 var multipart       = require('connect-multiparty');
@@ -12,7 +12,7 @@ var md_upload       = multipart({ uploadDir: './uploads/albums' });
 
 // ROUTES
 // GET requirements
-api
+app
 	.get('/album/:id?',
 		md_auth.ensureAuth,
 		AlbumController.getAlbum)
@@ -25,7 +25,7 @@ api
 
 
 // POST requirements
-api
+app
 	.post('/album',
 		md_auth.ensureAuth,
 		AlbumController.saveAlbum)
@@ -39,7 +39,7 @@ api
 
 
 // PUT requirements
-api
+app
 	.put('/album/:id',
 		md_auth.ensureAuth,
 		AlbumController.updateAlbum);
@@ -47,11 +47,11 @@ api
 
 
 // DELETE requirements
-api
+app
 	.delete('/album/:id',
 		md_auth.ensureAuth,
 		AlbumController.deleteAlbum);
 
 
 
-module.exports  = api;
+module.exports  = app;

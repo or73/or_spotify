@@ -1,0 +1,102 @@
+<section class="head-page w-100"
+     *ngIf="identity">
+  <header>
+    <p class="title_style_class">{{ title }}</p>
+
+    <a *ngIf="identity && identity.role === 'ROLE_ADMIN'"
+       class="btn btn-outline-primary"
+       [routerLink]="['/create-artist']">
+      Add Artist
+    </a>
+  </header>
+
+
+  <nav>
+    <!-- Pagination Controls -->
+    <ul class="pagination">
+      <li>
+        <a [routerLink]="['/artists', prev_page]"
+           class="page-link"
+           aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+
+      <li>
+        <a [routerLink]="['/artists', next_page]"
+           class="page-link"
+           aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>  <!-- /*ngIf -->
+
+
+
+<section *ngIf="identity"
+         class="container align-content-center container_list_class">
+  <ul class="artist_list_class list-unstyled w-100">
+    <li *ngFor="let artist of artists"
+        class="col-lg-4 artist_item_list_class text-center">
+      <div class="artist_image_name_class">
+        <div *ngIf="artist.image && artist.image != 'null'"
+             class="artist_image_class">
+          <figure>
+            <img src="{{ url + 'get-image-artist/' + artist.image }}"
+                 class="img-fluid img-thumbnail" />
+          </figure>
+  
+          <a [routerLink]="['/artist', artist._id]"
+             class="artist_name_anchor_class">
+            {{ artist.name }}
+          </a>
+        </div>  <!-- / .artist_image_class -->
+
+        <div *ngIf="!artist.image || artist.image === 'null'"
+             class="artist_image_name_class">
+          <figure class="artist_image_class">
+            <img src="{{ url + 'get-image-artist/default.jpg' }}"
+                 class="img-fluid img-thumbnail" />
+          </figure>
+          <a [routerLink]="['/artist', artist._id]"
+             class="artist_name_anchor_class">
+            {{ artist.name }}
+          </a>
+        </div>  <!-- / .artist_name_class -->
+      </div>  <!-- / .artist_image_name_class -->
+
+      <div class="buttons"
+           *ngIf="identity.role === 'ROLE_ADMIN'">
+        <a [routerLink]="['/edit-artist', artist._id]"
+           class="btn btn-sm btn-outline-warning">
+          Edit
+        </a>
+
+        <a (click)="onDeleteConfirm(artist._id)"
+           class="btn btn-sm btn-outline-danger">
+          Delete
+        </a>
+      </div>  <!-- / .buttons -->
+
+
+
+      <div id="id_confirmation"
+           class="confirmation_class"
+           *ngIf="confirmation === artist._id">
+        <a (click)="onDeleteArtist(artist._id)"
+           class="btn btn-sm btn-danger">
+          Confirm
+        </a>
+        <a (click)="onCancelArtist()"
+           class="btn btn-sm btn-warning">
+          Cancel
+        </a>
+      </div>  <!-- / .confirmation_class -->
+    </li>
+  </ul>
+</section>  <!-- / container -->
+
